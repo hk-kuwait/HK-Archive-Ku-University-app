@@ -6,7 +6,6 @@ import { fileURLToPath, URL } from 'node:url';
 export default defineConfig({
   plugins: [react()],
   base: '/HK-Archive-Ku-University-app/',
-})
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
