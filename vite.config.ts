@@ -15,4 +15,4 @@ export default defineConfig({
     exclude: ['lucide-react', 'pdfjs-dist'],
     include: ['mammoth', 'xlsx'],
   },
-});
+}); 
