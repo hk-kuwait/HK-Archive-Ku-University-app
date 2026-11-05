@@ -27,16 +27,23 @@ jobs:
 
       - run: npm ci
 
-      - name: Debug Supabase URL format
+      - name: Check env format
         run: |
-          if [[ "$VITE_SUPABASE_URL" =~ ^https://[a-z0-9-]+\.supabase\.co$ ]]; then
-            echo "URL format looks VALID."
-          else
-            echo "URL format looks INVALID or contains unexpected characters/spaces."
-            echo "Length of URL: ${#VITE_SUPABASE_URL}"
-          fi
+          case "$VITE_SUPABASE_URL" in
+            https://*.supabase.co) echo "URL format OK" ;;
+            "") echo "URL is EMPTY" ;;
+            http*) echo "URL starts with http but format is unusual" ;;
+            *) echo "URL does NOT start with https://" ;;
+          esac
+          echo "URL length: ${#VITE_SUPABASE_URL}"
+          case "$VITE_SUPABASE_ANON_KEY" in
+            eyJ*) echo "KEY format OK" ;;
+            "") echo "KEY is EMPTY" ;;
+            *) echo "KEY does NOT start with eyJ" ;;
+          esac
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       - run: npm run build
         env:
