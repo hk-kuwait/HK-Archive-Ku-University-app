@@ -27,6 +27,17 @@ jobs:
 
       - run: npm ci
 
+      - name: Debug Supabase URL format
+        run: |
+          if [[ "$VITE_SUPABASE_URL" =~ ^https://[a-z0-9-]+\.supabase\.co$ ]]; then
+            echo "URL format looks VALID."
+          else
+            echo "URL format looks INVALID or contains unexpected characters/spaces."
+            echo "Length of URL: ${#VITE_SUPABASE_URL}"
+          fi
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+
       - run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
