@@ -2,10 +2,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
 
-// GitHub Actions sets GITHUB_ACTIONS; Netlify and Vercel serve the site from the root.
+// GitHub Pages needs the repository path; hosted deployments serve from the root.
 export default defineConfig({
   plugins: [react()],
-  base: '/HK-Archive-Ku-University-app/',
+  base: process.env.GITHUB_ACTIONS ? '/digital-archive/' : '/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
